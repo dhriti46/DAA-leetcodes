@@ -1,26 +1,18 @@
-class Solution:
-
+class Solution(object):
     def maxProfitAssignment(self, difficulty, profit, worker):
+        jobs = sorted(zip(difficulty, profit))
 
-        jobs = []
-
-        for i in range(len(difficulty)):
-            jobs.append([difficulty[i], profit[i]])
-
-        jobs.sort()
+        max_profit = 0
+        best = 0
+        i = 0
 
         worker.sort()
 
-        answer = 0
-        best = 0
-        j = 0
-
         for ability in worker:
+            while i < len(jobs) and jobs[i][0] <= ability:
+                best = max(best, jobs[i][1])
+                i += 1
 
-            while j < len(jobs) and jobs[j][0] <= ability:
-                best = max(best, jobs[j][1])
-                j += 1
+            max_profit += best
 
-            answer += best
-
-        return answer
+        return max_profit
